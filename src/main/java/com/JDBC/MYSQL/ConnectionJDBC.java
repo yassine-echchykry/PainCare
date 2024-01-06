@@ -32,7 +32,7 @@ public class ConnectionJDBC {
 		        }
 
 		        /* Connexion à la base de données */
-		        String url = "jdbc:mysql://localhost:3306/picalti";
+		        String url = "jdbc:mysql://localhost:3306/paincare";
 		        String utilisateur = "root";
 		        String motDePasse = "";
 		        Connection connexion = null;

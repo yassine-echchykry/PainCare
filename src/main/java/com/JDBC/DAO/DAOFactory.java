@@ -1,4 +1,5 @@
 package com.JDBC.DAO;
+import PainCare.DAO_Impl.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,6 +68,14 @@ public class DAOFactory {
      /* package */ public Connection getConnection() throws SQLException {
         return DriverManager.getConnection( url, username, password );
     }
+     
+     public Diagnostic_DAO_Impl getDiagnosticDAO() {
+         return new Diagnostic_DAO_Impl(this);
+     }
+
+     public User_DAO_Impl getUserDAO() {
+     	return new User_DAO_Impl(this);
+     }
 
     /*
      * Méthodes de récupération de l'implémentation des différents DAO (un seul

@@ -1,13 +1,10 @@
 package PainCare.DAO;
 
-import java.util.List;
 import PainCare.Beans.*;
 
+import java.sql.SQLException;
+
 public interface Diagnostic_DAO {
-
-    void create(Diagnostic_Bean diagnostic);
-
-    
-
-    // Autres méthodes nécessaires
+    void creer(String reponses, int user_id) throws SQLException;
+    Diagnostic_Bean Dernier_Test(int user_id) throws SQLException;
 }

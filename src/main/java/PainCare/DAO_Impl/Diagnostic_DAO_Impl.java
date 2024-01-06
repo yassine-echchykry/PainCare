@@ -1,61 +1,59 @@
 package PainCare.DAO_Impl;
 
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import com.JDBC.DAO.DAOException;
-import com.JDBC.DAO.DAOFactory;
+import com.JDBC.DAO.*;
 import PainCare.DAO.*;
 import PainCare.Beans.*;
 
 public class Diagnostic_DAO_Impl implements Diagnostic_DAO {
-
     private DAOFactory daoFactory;
 
     public Diagnostic_DAO_Impl(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 
+    private static Diagnostic_Bean getBean(ResultSet res) throws SQLException {
+        Diagnostic_Bean bean = new Diagnostic_Bean();
+        
+        bean.setId(res.getInt("id"));
+        bean.setUser_id(res.getInt("user_id"));
+        bean.setReponses(res.getString("reponses"));
+        
+        return bean;
+    }
+
     @Override
-    public void create(Diagnostic_Bean diagnostic) throws DAOException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-
-        try {
-            connection = daoFactory.getConnection();
-            String sql = "INSERT INTO Diagnostic (user_id, reponses) VALUES (?, ?)";
-            preparedStatement = initPreparedStatement(connection, sql,
-                    diagnostic.getUser_id(), arrayToString(diagnostic.getReponses()));
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        } finally {
-            // Gestion de la fermeture des ressources (à ajouter)
-        }
+    public void creer(String reponses, int user_id) throws SQLException {
+        Connection conn = daoFactory.getConnection();
+        String SQL = "INSERT INTO diagnostics (reponses, user_id) VALUES (?, ?);";
+        PreparedStatement statement = conn.prepareStatement(SQL);
+        
+        statement.setString(1, reponses);
+        statement.setInt(2, user_id);
+        
+        statement.execute();
+        
+        statement.close();
+        conn.close();
     }
 
-   
-
-    // Ajoutez d'autres méthodes si nécessaire
-
-    private static PreparedStatement initPreparedStatement(Connection connection, String sql, Object... objects) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        for (int i = 0; i < objects.length; i++) {
-            preparedStatement.setObject(i + 1, objects[i]);
-        }
-        return preparedStatement;
-    }
-
-    private static String arrayToString(int[] array) {
-        StringBuilder result = new StringBuilder();
-        for (int i : array) {
-            result.append(i).append(",");
-        }
-        return result.length() > 0 ? result.substring(0, result.length() - 1) : "";
+    @Override
+    public Diagnostic_Bean Dernier_Test(int user_id) throws SQLException {
+        Connection conn = daoFactory.getConnection();
+        String SQL = "SELECT * FROM diagnostics WHERE user_id = ? ORDER BY id DESC LIMIT 1;";
+        PreparedStatement statement = conn.prepareStatement(SQL);
+        
+        statement.setInt(1, user_id);
+        
+        ResultSet res = statement.executeQuery();
+        Diagnostic_Bean bean = res.next() ? getBean(res) : null;
+        
+        statement.close();
+        conn.close();
+        
+        return bean;
     }
 }
-
