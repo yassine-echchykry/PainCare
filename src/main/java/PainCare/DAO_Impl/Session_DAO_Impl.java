@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.JDBC.DAO.DAOFactory;
-import PainCare.Beans.Session_Bean;
-import PainCare.DAO.Session_DAO;
+import PainCare.Beans.*;
+import PainCare.DAO.*;
 
 public class Session_DAO_Impl implements Session_DAO {
     private DAOFactory daoFactory;
@@ -19,13 +19,59 @@ public class Session_DAO_Impl implements Session_DAO {
 
     @Override
     public void insertSession(Session_Bean sessionBean) {
-        // Implement the logic to insert a session into the Session table
-    	Connection conn = daoFactory.getConnection();
-    }
+        Connection conn = null;
+        PreparedStatement statement = null;
 
+        try {
+            conn = daoFactory.getConnection();
+            String SQL = "INSERT INTO session (user_id, token) VALUES (?, ?)";
+            statement = conn.prepareStatement(SQL);
+
+            statement.setInt(1, sessionBean.getUserId());
+            statement.setString(2, sessionBean.getToken());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();}
+       
+    }
     @Override
-    public Session_Bean getSessionByToken(String token) {
-        // Implement the logic to retrieve a session by token from the Session table
-        return null;
+    public String getUsernameByToken(String token) {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conn = daoFactory.getConnection();
+            String SQL = "SELECT users.name AS username " +
+                    "FROM session " +
+                    "JOIN users ON session.user_id = users.id " +
+                    "WHERE session.token = ?";
+            statement = conn.prepareStatement(SQL);
+
+            statement.setString(1, token);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Return the username directly
+                return resultSet.getString("username");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources (Connection, PreparedStatement, ResultSet) in the finally block
+            // to ensure they are always closed, even if an exception occurs.
+            // Note: You might want to handle these exceptions more gracefully in a production environment.
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null; // Return null if no session found with the given token
     }
 }

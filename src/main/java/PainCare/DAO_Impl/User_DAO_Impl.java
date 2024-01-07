@@ -30,37 +30,6 @@ public class User_DAO_Impl implements User_DAO {
     	return bean;
     }
     
-    @Override
-    public void update(User_Bean bean) throws SQLException {
-    	Connection conn = daoFactory.getConnection();
-    	String SQL = "UPDATE users SET name = ?, email = ?, avatar = ?, birthDay = ? WHERE id = ?;";
-    	PreparedStatement statement = conn.prepareStatement(SQL);
-    	
-    	statement.setString(1, bean.getName());
-    	statement.setString(2, bean.getEmail());
-    	statement.setInt(5, bean.getID());
-    	
-    	statement.execute();
-    	
-    	statement.close();
-    	conn.close();
-    }
-    
-    @Override
-    public void delete(int id) throws SQLException {
-    	Connection conn = daoFactory.getConnection();
-    	String SQL = "DELETE FROM users WHERE id = ?;";
-    	PreparedStatement statement = conn.prepareStatement(SQL);
-    	
-    	statement.setInt(1, id);
-    	
-    	statement.execute();
-    	
-    	statement.close();
-    	conn.close();
-    }
-    
-    @Override
     public User_Bean login(String email, String password) throws SQLException {
     	Connection conn = daoFactory.getConnection();
     	String SQL = "SELECT * FROM users WHERE email = ? AND password = ?;";
@@ -94,6 +63,39 @@ public class User_DAO_Impl implements User_DAO {
     	statement.close();
     	conn.close();
     }
+    
+    @Override
+    public void update(User_Bean bean) throws SQLException {
+    	Connection conn = daoFactory.getConnection();
+    	String SQL = "UPDATE users SET name = ?, email = ?, avatar = ?, birthDay = ? WHERE id = ?;";
+    	PreparedStatement statement = conn.prepareStatement(SQL);
+    	
+    	statement.setString(1, bean.getName());
+    	statement.setString(2, bean.getEmail());
+    	statement.setInt(5, bean.getID());
+    	
+    	statement.execute();
+    	
+    	statement.close();
+    	conn.close();
+    }
+    
+    @Override
+    public void delete(int id) throws SQLException {
+    	Connection conn = daoFactory.getConnection();
+    	String SQL = "DELETE FROM users WHERE id = ?;";
+    	PreparedStatement statement = conn.prepareStatement(SQL);
+    	
+    	statement.setInt(1, id);
+    	
+    	statement.execute();
+    	
+    	statement.close();
+    	conn.close();
+    }
+    
+    
+  
     
     @Override
     public User_Bean auth(HttpServletRequest request) {

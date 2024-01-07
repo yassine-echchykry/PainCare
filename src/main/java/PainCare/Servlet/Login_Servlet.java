@@ -25,10 +25,12 @@ import PainCare.DAO_Impl.*;
 public class Login_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private User_DAO_Impl userDAO;
+	private Session_DAO_Impl sessionDAO;
 	
 	public void init() throws ServletException {
 		DAOFactory daoFactory = DAOFactory.getInstance();
 		this.userDAO = daoFactory.getUserDAO();
+		this.sessionDAO = daoFactory.getSessionDAO();
 	}  
 	
     
@@ -80,6 +82,12 @@ public class Login_Servlet extends HttpServlet {
 			response.setContentType("text/plain"); // Set the content type to plain text
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(token);
+			
+			// Store the session information in the Session table
+            Session_Bean sessionBean = new Session_Bean();
+            sessionBean.setUserId(userBean.getID());
+            sessionBean.setToken(token);
+            sessionDAO.insertSession(sessionBean);
 
 			
 		} catch (SQLException e) {

@@ -5,5 +5,5 @@ import PainCare.Beans.Session_Bean;
 
 public interface Session_DAO {
     void insertSession(Session_Bean sessionBean);
-    Session_Bean getSessionByToken(String token);
+    String getUsernameByToken(String token);
 }

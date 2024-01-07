@@ -59,15 +59,22 @@ public class Register_Servlet extends HttpServlet {
         System.out.println("Name: " + name);
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
-        // Perform any necessary backend logic with the received data
+        
+        try {
+            userDAO.register(name, email, password);
+            // Perform any necessary backend logic with the received data
 
-        // Send a response back to the client
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+            // Send a response back to the client
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
 
-        PrintWriter out = response.getWriter();
-        out.print("{\"status\": \"success\"}");
-        out.flush();
+            PrintWriter out = response.getWriter();
+            out.print("{\"status\": \"success\"}");
+            out.flush();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception appropriately (log it or return an error response)
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing the registration");
+        }
     
         
     }

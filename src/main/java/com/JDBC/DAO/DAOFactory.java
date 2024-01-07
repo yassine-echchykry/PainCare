@@ -77,6 +77,16 @@ public class DAOFactory {
      	return new User_DAO_Impl(this);
      }
 
+	public Session_DAO_Impl getSessionDAO() {
+		// TODO Auto-generated method stub
+		return new Session_DAO_Impl(this);
+	}
+
+	public Pain_DAO_Impl getPainDAO() {
+		// TODO Auto-generated method stub
+		return new Pain_DAO_Impl(this);
+	}
+
     /*
      * Méthodes de récupération de l'implémentation des différents DAO (un seul
      * pour le moment)

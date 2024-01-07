@@ -59,4 +59,24 @@
     <servlet-name>Login_Servlet</servlet-name>
     <url-pattern>/Login_Servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Pain_Servlet</display-name>
+    <servlet-name>Pain_Servlet</servlet-name>
+    <servlet-class>PainCare.Servlet.Pain_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Pain_Servlet</servlet-name>
+    <url-pattern>/Pain_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Get_InfosProfil_Servlet</display-name>
+    <servlet-name>Get_InfosProfil_Servlet</servlet-name>
+    <servlet-class>PainCare.Servlet.Get_InfosProfil_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Get_InfosProfil_Servlet</servlet-name>
+    <url-pattern>/Get_InfosProfil_Servlet</url-pattern>
+  </servlet-mapping>
 </web-app>

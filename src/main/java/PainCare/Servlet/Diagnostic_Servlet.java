@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import PainCare.DAO_Impl.Diagnostic_DAO_Impl;
+import PainCare.DAO_Impl.*;
 import PainCare.Beans.*;
 import com.JDBC.DAO.*;
 import jakarta.servlet.ServletException;
