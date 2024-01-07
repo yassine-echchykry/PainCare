@@ -87,6 +87,11 @@ public class DAOFactory {
 		return new Pain_DAO_Impl(this);
 	}
 
+	public Posts_DAO_Impl getPostDAO() {
+		// TODO Auto-generated method stub
+		return new Posts_DAO_Impl(this);
+	}
+
     /*
      * Méthodes de récupération de l'implémentation des différents DAO (un seul
      * pour le moment)

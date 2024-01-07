@@ -3,10 +3,13 @@ package PainCare.DAO_Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.JDBC.DAO.DAOFactory;
-import PainCare.Beans.Pain_Bean;
+
 import PainCare.DAO.Pain_DAO;
 
 public class Pain_DAO_Impl implements Pain_DAO {
@@ -24,7 +27,8 @@ public class Pain_DAO_Impl implements Pain_DAO {
         try {
             conn = daoFactory.getConnection();
             String SQL = "INSERT INTO pain (user_id, pain_level, locations, symptoms, worse_pain, feelings) " +
-                         "VALUES (?, ?, ?, ?, ?, ?)";
+                         "VALUES (?, ?, ?, ?, ?, ?)"
+            		    ;
             statement = conn.prepareStatement(SQL);
 
             statement.setInt(1,userId);
@@ -40,7 +44,45 @@ public class Pain_DAO_Impl implements Pain_DAO {
         } finally {
             
         }
-    }}
+    }
+    
+    
+    public List<Integer> getLatestPainLevels(int userId) {
+    	Connection conn;
+		try {
+			conn = daoFactory.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        List<Integer> painLevels = new ArrayList<>();
+
+        try {
+            conn = daoFactory.getConnection();
+            String SQL = "SELECT pain_level FROM pain WHERE user_id = ? ORDER BY id DESC LIMIT 7";
+            PreparedStatement statement = conn.prepareStatement(SQL);
+            statement.setInt(1, userId);
+
+            ResultSet res = statement.executeQuery();
+
+            while (res.next()) {
+                int painLevel = res.getInt("pain_level");
+                painLevels.add(painLevel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources in the finally block
+            // ...
+        }
+
+        return painLevels;
+    }
+
+    
+
+
+}
 
     // Add more methods if needed
 

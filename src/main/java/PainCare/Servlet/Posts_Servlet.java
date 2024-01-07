@@ -11,29 +11,24 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.Part;
+
 import com.JDBC.DAO.*;
 import PainCare.Beans.*;
 import PainCare.DAO.*;
 import PainCare.DAO_Impl.*;
 
-@WebServlet("/register")
-public class Register_Servlet extends HttpServlet {
+@WebServlet("/PublishPost")
+@MultipartConfig
+public class Posts_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private User_DAO_Impl userDAO;
+	private Posts_DAO_Impl postDAO;
 	
 	public void init() throws ServletException {
 	    System.out.println("Init method called!");  // Ajoutez cette ligne pour le débogage
 	    DAOFactory daoFactory = DAOFactory.getInstance();
-	    this.userDAO = daoFactory.getUserDAO();
-	}
-
-	
-    
-    
-   
-
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    this.postDAO = daoFactory.getPostDAO();
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,37 +43,50 @@ public class Register_Servlet extends HttpServlet {
                 requestBody.append(line);
             }
         }
-        
-     // Parse JSON data
-        String jsonString = requestBody.toString();
-        System.out.println("pqssed ");
-        System.out.printf("Name: %s%n", jsonString);
 
-        String name = getValueFromJsonString(jsonString, "name");
-        String email = getValueFromJsonString(jsonString, "email");
-        String password = getValueFromJsonString(jsonString, "password");
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
-        
-        try {
-            userDAO.register(name, email, password);
-            // Perform any necessary backend logic with the received data
+	    // Parse JSON data
+	    String jsonString = requestBody.toString();
+	    System.out.printf("Name: %s%n", jsonString);
 
-            // Send a response back to the client
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+	    String token = getValueFromJsonString(jsonString, "authToken");
+	    String title = getValueFromJsonString(jsonString, "title");
+	    String description = getValueFromJsonString(jsonString, "description");
+	    System.out.printf("Name: %s%n", title);
+	    String image ="" ;
+	    
+	    int userid=1;
+	    
+	    try {
+			postDAO.create(userid,title, description, image);
+			System.out.printf("Name2: %s%n", title);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-            PrintWriter out = response.getWriter();
-            out.print("{\"status\": \"success\"}");
-            out.flush();
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately (log it or return an error response)
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error processing the registration");
-        }
+	   
+
+	    // Read the file content into a string (you may want to convert it to Base64)
+	   
+
+	   
+
+	    // Your further processing logic here...
+
+	    
+	        // Perform any necessary backend logic with the received data
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+
+	        PrintWriter out = response.getWriter();
+	        out.print("{\"status\": \"success\"}");
+	        out.flush();
+	    
+	}
+
     
         
-    }
+    
 	private String getValueFromJsonString(String jsonString, String key) {
         int startIndex = jsonString.indexOf("\"" + key + "\":") + key.length() + 3; // 3 accounts for ": and optional space
         int endIndex = jsonString.indexOf(",", startIndex);

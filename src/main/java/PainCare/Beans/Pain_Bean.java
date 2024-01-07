@@ -1,6 +1,8 @@
 // Pain_Bean.java
 package PainCare.Beans;
 
+
+
 public class Pain_Bean {
     private int id;
     private int user_id;

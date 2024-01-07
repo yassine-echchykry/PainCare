@@ -79,4 +79,34 @@
     <servlet-name>Get_InfosProfil_Servlet</servlet-name>
     <url-pattern>/Get_InfosProfil_Servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Get_LastPainLevels_Servlet</display-name>
+    <servlet-name>Get_LastPainLevels_Servlet</servlet-name>
+    <servlet-class>PainCare.Servlet.Get_LastPainLevels_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Get_LastPainLevels_Servlet</servlet-name>
+    <url-pattern>/Get_LastPainLevels_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ResultDiagnostic_Servlet</display-name>
+    <servlet-name>ResultDiagnostic_Servlet</servlet-name>
+    <servlet-class>PainCare.Servlet.ResultDiagnostic_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResultDiagnostic_Servlet</servlet-name>
+    <url-pattern>/ResultDiagnostic_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Posts_Servlet</display-name>
+    <servlet-name>Posts_Servlet</servlet-name>
+    <servlet-class>PainCare.Servlet.Posts_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Posts_Servlet</servlet-name>
+    <url-pattern>/Posts_Servlet</url-pattern>
+  </servlet-mapping>
 </web-app>
