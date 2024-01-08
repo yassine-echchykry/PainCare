@@ -35,9 +35,10 @@ public class Get_InfosProfil_Servlet extends HttpServlet {
         }
 
         String token = stringBuilder.toString();
+        System.out.printf("token",token);
 
         System.out.println("before");
-		String username= sessionDAO.getUsernameByToken(token);
+        String username= sessionDAO.getUsernameByToken(token);
 		
 		
 

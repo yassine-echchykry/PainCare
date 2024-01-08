@@ -109,4 +109,44 @@
     <servlet-name>Posts_Servlet</servlet-name>
     <url-pattern>/Posts_Servlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Get_PostsServlet</display-name>
+    <servlet-name>Get_PostsServlet</servlet-name>
+    <servlet-class>PainCare.Servlet.Get_PostsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Get_PostsServlet</servlet-name>
+    <url-pattern>/Get_PostsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Comment_DAO</display-name>
+    <servlet-name>Comment_DAO</servlet-name>
+    <servlet-class>PainCare.DAO.Comment_DAO</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Comment_DAO</servlet-name>
+    <url-pattern>/Comment_DAO</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetComments_Servlet</display-name>
+    <servlet-name>GetComments_Servlet</servlet-name>
+    <servlet-class>PainCare.Servlet.GetComments_Servlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetComments_Servlet</servlet-name>
+    <url-pattern>/GetComments_Servlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Create_Comment</display-name>
+    <servlet-name>Create_Comment</servlet-name>
+    <servlet-class>PainCare.Servlet.Create_Comment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Create_Comment</servlet-name>
+    <url-pattern>/Create_Comment</url-pattern>
+  </servlet-mapping>
 </web-app>

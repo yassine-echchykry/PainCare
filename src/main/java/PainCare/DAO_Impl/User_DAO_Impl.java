@@ -94,15 +94,40 @@ public class User_DAO_Impl implements User_DAO {
     	conn.close();
     }
     
-    
-  
-    
-    @Override
-    public User_Bean auth(HttpServletRequest request) {
-    	HttpSession session = request.getSession();
-    	User_Bean bean = (User_Bean) session.getAttribute("user");
-    	
-    	return bean;
+    public User_Bean getUserById(int userId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            conn = daoFactory.getConnection();
+            String SQL = "SELECT * FROM users WHERE id = ?";
+            statement = conn.prepareStatement(SQL);
+            statement.setInt(1, userId);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                User_Bean user = new User_Bean();
+                user.setID(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                // Add other attributes as needed
+
+                return user;
+            } else {
+                return null; // No user found with the given ID
+            }
+        } finally {
+            // Close resources in a finally block
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (conn != null) conn.close();
+        }
     }
 }
+  
+    
+    
+
 

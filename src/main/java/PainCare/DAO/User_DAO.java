@@ -11,6 +11,6 @@ public interface User_DAO {
 	public void delete(int id) throws SQLException;
 	public User_Bean login(String email, String password) throws SQLException;
 	public void register(String username, String email, String password) throws SQLException;
-	public User_Bean auth(HttpServletRequest request);
+	public User_Bean getUserById(int userId) throws SQLException;
 }
 

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import com.JDBC.DAO.*;
 import PainCare.DAO.*;
 import PainCare.Beans.*;
@@ -52,19 +54,41 @@ public class Posts_DAO_Impl {
     	conn.close();
     }
     
-    public void update(Posts_Bean bean) throws SQLException {
+    public ArrayList<Posts_Bean> all() throws SQLException {
     	Connection conn = daoFactory.getConnection();
-    	String SQL = "UPDATE blogs SET title = ?, description = ?, image = ? WHERE id = ?;";
+    	
+    	String SQL = "SELECT posts.*, users.name AS user_name "
+    			+ "FROM posts "
+    			+ "JOIN users ON posts.user_id = users.id "
+    			+ "ORDER BY id DESC;";
+    	
+    	System.out.printf("Noooo");
     	PreparedStatement statement = conn.prepareStatement(SQL);
     	
-    	statement.setString(1, bean.getTitle());
-    	statement.setString(2, bean.getDescription());
-    	statement.setString(3, bean.getImage());
-    	statement.setInt(4, bean.getID());
+    	ResultSet res = statement.executeQuery();
+    	ArrayList<Posts_Bean> list = new ArrayList<Posts_Bean>();
     	
-    	statement.execute();
+    	while(res.next()) list.add(getBean(res));
     	
+    	res.close();
     	statement.close();
     	conn.close();
+    	
+    	return list;
     }
+
+    private static Posts_Bean getBean(ResultSet res) throws SQLException {
+    	Posts_Bean bean = new Posts_Bean();
+    	
+    	bean.setID(res.getInt("id"));
+    	bean.setUserID(res.getInt("user_id"));
+    	bean.setTitle(res.getString("title"));
+    	bean.setDescription(res.getString("description"));
+    	bean.setDate(res.getDate("date"));
+    	
+    	
+    	return bean;
+    }
+    
+    
 }

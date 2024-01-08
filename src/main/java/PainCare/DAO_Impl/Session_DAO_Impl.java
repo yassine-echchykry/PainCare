@@ -50,7 +50,6 @@ public class Session_DAO_Impl implements Session_DAO {
             statement = conn.prepareStatement(SQL);
 
             statement.setString(1, token);
-
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

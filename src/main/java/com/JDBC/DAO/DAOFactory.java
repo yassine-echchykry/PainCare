@@ -92,6 +92,11 @@ public class DAOFactory {
 		return new Posts_DAO_Impl(this);
 	}
 
+	public Comment_DAO_Impl getCommentDAO() {
+		// TODO Auto-generated method stub
+		return new Comment_DAO_Impl(this);
+	}
+
     /*
      * Méthodes de récupération de l'implémentation des différents DAO (un seul
      * pour le moment)
